@@ -1,6 +1,6 @@
 # d14_ruby_scrapping
 
-Trois excercices à réaliser aujourd'hui :
+Trois exercices à réaliser aujourd'hui :
 
 # 1- dark_trader.rb 
 
