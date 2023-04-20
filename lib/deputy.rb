@@ -4,10 +4,26 @@ require 'open-uri'
 
 def deputy_first_name
   page = Nokogiri::HTML(URI.open("https://www2.assemblee-nationale.fr/deputes/liste/alphabetique"))
-  page.xpath('//a[starts-with(@href,"/deputes/fiche")]')
+  array_names = page.xpath('//a[starts-with(@href,"/deputes/fiche")]')
+  deputy_first_name = []
   array_names.each do |link|
-    puts first_name = link.split('.',-1)[1]
+    first_name = link.to_s[0..-5].split('>')[1].split[1]
+    first_name
+    deputy_first_name << first_name
   end
+  return deputy_first_name
+end
+
+def deputy_last_name
+  page = Nokogiri::HTML(URI.open("https://www2.assemblee-nationale.fr/deputes/liste/alphabetique"))
+  array_names = page.xpath('//a[starts-with(@href,"/deputes/fiche")]')
+  deputy_last_name = []
+  array_names.each do |link|
+    last_name = link.to_s[0..-5].split('>')[1].split[2]
+    last_name
+    deputy_last_name << last_name
+  end
+  return deputy_last_name
 end
 
 def deputy_url
@@ -32,7 +48,11 @@ def deputy_email(url)
   return deputy_emails
 end
 
-puts deputy_first_name
+def perform(first_name, last_name, emails)
+hash_deputy = Hash[first_name, last_name, emails]
+end
+
+puts perform(deputy_first_name, deputy_last_name,deputy_email(deputy_url))
 # print deputy_email(deputy_url)
 # #https://www.assemblee-nationale.fr/dyn/deputes/PA605036
 

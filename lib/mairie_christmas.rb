@@ -18,13 +18,24 @@ def get_townhall_urls
   return array_town_url
 end
 
-# Fait une petite boucle pour faire correspondre chaque url à l'adresse mail correspondante
-def perform(array_url_townhall)
-  array_town_email = []  
-  get_townhall_urls.each do |town_url|
-  array_town_email << get_townhall_email(town_url)
-  end
-  return array_town_email
+# Pour aller chercher les noms de toutes les communes du 9-5
+def get_townhall_names
+  page = Nokogiri::HTML(URI.open("http://annuaire-des-mairies.com/val-d-oise.html"))
+  array_town_names = []
+  array_town_name = page.xpath("//p/a")
+  array_town_name.each do |town_name|
+    array_town_names<< town_name.text
+  end  
+  return array_town_names
 end
 
-puts perform(get_townhall_urls)
+# # Fait une petite boucle pour faire correspondre chaque url à l'adresse mail correspondante et mettre les noms et les emails de le même hash
+def perform(array_url_townhall, get_townhall_names)
+  array_town_email = []  
+  get_townhall_urls.each do |town_url|
+    array_town_email << get_townhall_email(town_url)
+  end
+  array_town_email
+  get_townhall_names
+  hash_names_emails = Hash[get_townhall_names.zip(array_town_email)]
+end
