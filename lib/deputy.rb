@@ -1,7 +1,7 @@
 require 'nokogiri'
 require 'open-uri'
 
-
+# Pour faire un tableau des prénoms
 def deputy_first_name
   page = Nokogiri::HTML(URI.open("https://www2.assemblee-nationale.fr/deputes/liste/alphabetique"))
   array_names = page.xpath('//a[starts-with(@href,"/deputes/fiche")]')
@@ -14,6 +14,7 @@ def deputy_first_name
   return deputy_first_name
 end
 
+# Pour faire un tableau des noms de famille
 def deputy_last_name
   page = Nokogiri::HTML(URI.open("https://www2.assemblee-nationale.fr/deputes/liste/alphabetique"))
   array_names = page.xpath('//a[starts-with(@href,"/deputes/fiche")]')
@@ -26,6 +27,7 @@ def deputy_last_name
   return deputy_last_name
 end
 
+# Pour faire un tableau des urls
 def deputy_url
   page = Nokogiri::HTML(URI.open("https://www2.assemblee-nationale.fr/deputes/liste/alphabetique"))
   deputy_numbers = []
@@ -38,6 +40,7 @@ def deputy_url
   return deputy_numbers
 end
 
+# On se sert des urls pour faire un tableau de mails
 def deputy_email(url)
   deputy_emails = []
   url.each do |link|
@@ -48,15 +51,12 @@ def deputy_email(url)
   return deputy_emails
 end
 
+# Et là on lui demande de tout regrouper, donc ça va chercher 325580 fois des informations et on time out comme des cons !
 def perform(first_name, last_name, emails)
-hash_deputy = Hash[first_name, last_name, emails]
+  first_name = deputy_first_name
+  last_name = deputy_last_name
+  email = deputy_email
+  first_name.zip(last_name, email).map {|f, l, e| {first_name => f, last_name => l, email => e}}
 end
 
-puts perform(deputy_first_name, deputy_last_name,deputy_email(deputy_url))
-# print deputy_email(deputy_url)
-# #https://www.assemblee-nationale.fr/dyn/deputes/PA605036
-
-# # puts hash_deputy = { first_name :'<a href="/deputes/fiche/OMC_PA793572">M. Christophe Plassard</a>'[0..-5].split('.',-1)[1] ; last_name : } 
-
-# '<a href="/deputes/fiche/OMC_PA793572">M. Christophe Plassard</a>'[0..-5].split('.',-1)[1]
-# '<a href="/deputes/fiche/OMC_PA793572">M. Christophe Plassard</a>'[0..-5].split('.',-1)[1]
+return perform(deputy_first_name, deputy_last_name,deputy_email(deputy_url))

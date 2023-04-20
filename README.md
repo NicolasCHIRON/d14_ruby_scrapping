@@ -9,3 +9,7 @@ Trois excercices à réaliser aujourd'hui :
 # 2- mairie_christmas_spec.rb
 
 => permet de lister les noms et les mails des communes du Val d'Oise en scrappant (?) les informations des sites internet choisis.
+
+# 2- deputy.rb
+
+=> permet de liste le nom, le prénom et l'adresse mail des députés... mais ça time out... donc vous verrez rien.
