@@ -11,6 +11,6 @@ describe "the scraping method" do
   end
 
   it "should verify is the return is a hash" do
-      expect(scraping(currencies,values).is_a?(Hash)).to be_truthy
+      expect(scraping(currencies,values).is_a?(Array)).to be_truthy
   end
 end

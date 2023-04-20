@@ -36,6 +36,8 @@ def perform(array_url_townhall, get_townhall_names)
     array_town_email << get_townhall_email(town_url)
   end
   array_town_email
-  get_townhall_names
-  hash_names_emails = Hash[get_townhall_names.zip(array_town_email)]
+  array_names_emails = get_townhall_names.zip(array_town_email)
+  array_names_emails.map{|name, email| {name => email}}
 end
+
+print perform(get_townhall_urls, get_townhall_names)

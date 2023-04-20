@@ -24,5 +24,8 @@ def values
 end
 
 def scraping(currencies,values)
-  return hash = Hash[currencies.zip(values)]
+  scraping = currencies.zip(values)
+  scraping.map{|crypto, value| {crypto => value[1..-1]}}
 end
+
+print scraping(currencies, values)
