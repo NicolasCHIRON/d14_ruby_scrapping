@@ -19,5 +19,3 @@ describe "the perform method" do
       expect(perform(get_townhall_urls, get_townhall_names).is_a?(Array)).to be_truthy
     end
 end
-
-print perform(get_townhall_urls, get_townhall_names)
